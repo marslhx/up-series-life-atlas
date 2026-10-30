@@ -1849,6 +1849,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     #up-life-atlas .view-caption-actions button[data-back-overview]:hover,
     #up-life-atlas .view-caption-actions button[data-back-overview]:focus { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--gold); }
     #up-life-atlas .overview-grid { display:grid; grid-template-columns:116px repeat(10,minmax(48px,1fr)); gap:5px; transition:.35s ease; }
+    #up-life-atlas .mobile-filmstrip { display:none; }
     #up-life-atlas .corner, #up-life-atlas .age-head { min-height:38px; color:var(--soft-ink); font-size:11px; display:flex; align-items:end; padding-bottom:4px; }
     #up-life-atlas .age-head { flex-direction:column; align-items:flex-start; justify-content:flex-end; }
     #up-life-atlas .age-head span { color:var(--ink); }
@@ -2020,14 +2021,31 @@ html&gt;body{padding:0}&lt;/style&gt;
     }
     @media (max-width:620px) {
       #up-life-atlas { padding:16px 12px 28px; }
-      #up-life-atlas .masthead { align-items:center; }
-      #up-life-atlas .topnav { gap:8px 12px; flex-wrap:wrap; justify-content:flex-end; }
-      #up-life-atlas .stage-rail { grid-template-columns:repeat(5,1fr); }
+      #up-life-atlas .masthead { align-items:flex-start; flex-direction:column; gap:14px; }
+      #up-life-atlas .identity { width:100%; justify-content:space-between; }
+      #up-life-atlas .topnav { width:100%; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; border-top:1px solid var(--line); }
+      #up-life-atlas .topnav button { min-height:44px; padding:9px 4px; border-bottom:1px solid var(--line); text-align:center; }
+      #up-life-atlas .topnav button[aria-pressed=&quot;true&quot;] { background:color-mix(in srgb,var(--gold) 9%,transparent); }
+      #up-life-atlas .intro { padding:30px 0 20px; }
+      #up-life-atlas .stage-rail { grid-template-columns:repeat(5,minmax(0,1fr)); gap:6px; margin:12px 0 20px; }
+      #up-life-atlas .stage-button { min-height:52px; padding:7px 3px 4px; text-align:center; }
+      #up-life-atlas .stage-button strong { font-size:13px; }
+      #up-life-atlas .stage-button small { font-size:9px; }
       #up-life-atlas .filter-drawer { grid-template-columns:1fr; }
-      #up-life-atlas .overview-grid { grid-template-columns:92px 1fr; }
-      #up-life-atlas .overview-view .overview-grid .age-head:not(.is-selected-age), #up-life-atlas .overview-view .overview-grid .portrait-cell:not(.is-selected-age) { display:none; }
-      #up-life-atlas .filter-grid-scroll { overflow-x:auto; padding-bottom:8px; }
-      #up-life-atlas .filter-grid { min-width:840px; }
+      #up-life-atlas .overview-grid, #up-life-atlas .filter-grid-scroll { display:none; }
+      #up-life-atlas .mobile-filmstrip { display:grid; grid-template-columns:1fr; gap:12px; }
+      #up-life-atlas .mobile-person-strip { min-width:0; padding:12px 10px 13px; background:color-mix(in srgb,var(--panel) 78%,transparent); border-top:1px solid var(--line); }
+      #up-life-atlas .mobile-person-strip.has-match { border-top-color:var(--highlight); }
+      #up-life-atlas .mobile-person-strip.no-match .mobile-person-head { opacity:.42; }
+      #up-life-atlas .mobile-person-head { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:9px; }
+      #up-life-atlas .mobile-person-head strong { color:var(--ink); font-size:15px; font-weight:400; }
+      #up-life-atlas .mobile-person-head span { color:var(--soft-ink); font-size:9px; text-align:right; }
+      #up-life-atlas .mobile-stage-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px 5px; }
+      #up-life-atlas .mobile-stage-cell { min-width:0; }
+      #up-life-atlas .mobile-stage-cell .portrait-cell { width:100%; display:block; }
+      #up-life-atlas .mobile-stage-label { display:flex; flex-direction:column; align-items:flex-start; gap:2px; margin-top:4px; color:var(--ink); font-size:10px; line-height:1; }
+      #up-life-atlas .mobile-stage-label small { color:var(--soft-ink); font-size:8px; }
+      #up-life-atlas .filter-view .mobile-stage-cell .portrait-cell.is-match { box-shadow:0 0 0 2px var(--highlight),0 5px 12px var(--shadow); transform:translateY(-1px); }
       #up-life-atlas .stage-cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
       #up-life-atlas .stage-card { height:286px; }
       #up-life-atlas .arc-card { height:372px; }
@@ -2075,6 +2093,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       &lt;section class=&quot;overview-view page-view&quot;&gt;
         &lt;div class=&quot;view-caption&quot;&gt;&lt;h2&gt;一代人的时间底片&lt;/h2&gt;&lt;span&gt;点击任意照片查看资料；状态点只表示资料层级&lt;/span&gt;&lt;/div&gt;
         &lt;div class=&quot;overview-grid&quot; id=&quot;overview-grid&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;mobile-filmstrip&quot; id=&quot;overview-mobile&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;legend time-legend&quot;&gt;
           &lt;span class=&quot;supported&quot;&gt;有出处的正式记录&lt;/span&gt;
           &lt;span class=&quot;candidate&quot;&gt;网友整理或字幕候选&lt;/span&gt;
@@ -2096,6 +2115,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;div class=&quot;filter-drawer is-open&quot; id=&quot;filter-drawer&quot; aria-label=&quot;多维筛选&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;filter-result&quot; id=&quot;filter-result&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;filter-grid-scroll&quot;&gt;&lt;div class=&quot;overview-grid filter-grid&quot; id=&quot;filter-grid&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;mobile-filmstrip&quot; id=&quot;filter-mobile&quot;&gt;&lt;/div&gt;
       &lt;/section&gt;
 
       &lt;section class=&quot;compare-view page-view&quot; id=&quot;compare-section&quot;&gt;
@@ -2171,14 +2191,9 @@ html&gt;body{padding:0}&lt;/style&gt;
     const namesZh=Object.fromEntries(data.people.map(p=&gt;[p.person_id,p.name_zh]));
     const peopleById=Object.fromEntries(data.people.map(p=&gt;[p.person_id,p]));
     const cellMap=Object.fromEntries(data.cells.map(c=&gt;[c.person_id+&#x27;-&#x27;+c.age,c]));
-    let state={schema:&#x27;up-life-atlas-v2&#x27;,view:&#x27;overview&#x27;,age:70,person:&#x27;sue-fitzgerald&#x27;,selected:null,echoTopic:&#x27;dreams&#x27;,compareGroup:&#x27;high-steady&#x27;,filters:{}};
-    const saved=window.openai?.widgetState?.privateContent;
-    const validViews=new Set([&#x27;overview&#x27;,&#x27;stage&#x27;,&#x27;person&#x27;,&#x27;filter&#x27;,&#x27;compare&#x27;,&#x27;echo&#x27;,&#x27;notes&#x27;]);
-    if(saved&amp;&amp;typeof saved===&#x27;object&#x27;&amp;&amp;saved.schema===&#x27;up-life-atlas-v2&#x27;) state={...state,...saved,view:validViews.has(saved.view)?saved.view:&#x27;overview&#x27;,filters:saved.filters||{}};
+    let state={schema:&#x27;up-life-atlas-v2&#x27;,view:&#x27;overview&#x27;,age:null,person:&#x27;sue-fitzgerald&#x27;,selected:null,echoTopic:&#x27;dreams&#x27;,compareGroup:&#x27;high-steady&#x27;,filters:{}};
     if(!data.comparison_groups.some(group=&gt;group.id===state.compareGroup))state.compareGroup=data.comparison_groups[0]?.id||null;
-    if([&#x27;overview&#x27;,&#x27;filter&#x27;,&#x27;compare&#x27;,&#x27;echo&#x27;,&#x27;notes&#x27;].includes(state.view))state.selected=null;
-    if(state.view===&#x27;echo&#x27;&amp;&amp;!state.echoTopic)state.echoTopic=data.question_echoes[0]?.id||null;
-    const save=()=&gt;{const task=window.openai?.setWidgetState?.({modelContent:{view:{overview:&#x27;人生全景&#x27;,stage:&#x27;同龄阶段&#x27;,person:&#x27;人物十阶段&#x27;,filter:&#x27;条件筛选&#x27;,compare:&#x27;人物比较&#x27;,echo:&#x27;问题回声&#x27;,notes:&#x27;创作手记&#x27;}[state.view],person:state.selected?namesZh[state.person]+&#x27; / &#x27;+names[state.person]:null,age:state.age,echo:state.echoTopic,filters:activeFilters().map(([field,value])=&gt;field+&#x27;:&#x27;+value)},privateContent:state});task?.catch?.(()=&gt;{});};
+    const save=()=&gt;{const task=window.openai?.setWidgetState?.({modelContent:{view:{overview:&#x27;人生全景&#x27;,stage:&#x27;同龄阶段&#x27;,person:&#x27;人物十阶段&#x27;,filter:&#x27;条件筛选&#x27;,compare:&#x27;人物比较&#x27;,echo:&#x27;问题回声&#x27;,notes:&#x27;创作手记&#x27;}[state.view],person:state.selected?namesZh[state.person]+&#x27; / &#x27;+names[state.person]:null,age:state.age,echo:state.echoTopic,filters:activeFilters().map(([field,value])=&gt;field+&#x27;:&#x27;+value)},privateContent:null});task?.catch?.(()=&gt;{});};
     const selectedCell=()=&gt;state.selected?cellMap[state.selected]:null;
     const shortFact=c=&gt;c.formal[0]?.text||c.candidate[0]?.text||&#x27;这一阶段尚未整理出可显示的生活摘要。&#x27;;
     const photoNote=c=&gt;c.image_note?`&lt;span class=&quot;photo-note&quot;&gt;${esc(c.image_note)}&lt;/span&gt;`:&#x27;&#x27;;
@@ -2196,7 +2211,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       $(&#x27;filter-drawer&#x27;).innerHTML=data.filters.map(f=&gt;`&lt;div class=&quot;filter-group&quot;&gt;&lt;label for=&quot;filter-${esc(f.field)}&quot;&gt;${esc(f.label)}&lt;/label&gt;&lt;select id=&quot;filter-${esc(f.field)}&quot; data-filter=&quot;${esc(f.field)}&quot;&gt;&lt;option value=&quot;&quot;&gt;不限定&lt;/option&gt;${Object.entries(f.values).map(([v,l])=&gt;`&lt;option value=&quot;${esc(v)}&quot;${state.filters[f.field]===v?&#x27; selected&#x27;:&#x27;&#x27;}&gt;${esc(l)}&lt;/option&gt;`).join(&#x27;&#x27;)}&lt;/select&gt;&lt;/div&gt;`).join(&#x27;&#x27;)+`&lt;div class=&quot;filter-note&quot;&gt;多个条件按“同一人物、同一阶段同时满足”计算。没有该阶段明确记录的照片也会变暗，不把未知状态当作匹配。&lt;/div&gt;`;
     }
     function renderRail(){
-      $(&#x27;stage-rail&#x27;).innerHTML=data.ages.map(age=&gt;`&lt;button type=&quot;button&quot; class=&quot;stage-button&quot; data-age=&quot;${age}&quot; aria-pressed=&quot;${age===state.age}&quot;&gt;&lt;strong&gt;${age}岁&lt;/strong&gt;&lt;small&gt;${data.years[age]}年&lt;/small&gt;&lt;/button&gt;`).join(&#x27;&#x27;);
+      $(&#x27;stage-rail&#x27;).innerHTML=data.ages.map(age=&gt;`&lt;button type=&quot;button&quot; class=&quot;stage-button&quot; data-age=&quot;${age}&quot; aria-pressed=&quot;${state.age!==null&amp;&amp;age===state.age}&quot;&gt;&lt;strong&gt;${age}岁&lt;/strong&gt;&lt;small&gt;${data.years[age]}年&lt;/small&gt;&lt;/button&gt;`).join(&#x27;&#x27;);
     }
     function cellButton(c,filterMode=false){
       const m=filterMode?match(c):&#x27;neutral&#x27;;return `&lt;button type=&quot;button&quot; class=&quot;portrait-cell${c.special_visual?&#x27; is-special&#x27;:&#x27;&#x27;}${!filterMode&amp;&amp;state.selected===c.person_id+&#x27;-&#x27;+c.age?&#x27; is-selected&#x27;:&#x27;&#x27;}${m===&#x27;no&#x27;?&#x27; is-dimmed&#x27;:m===&#x27;match&#x27;?&#x27; is-match&#x27;:&#x27;&#x27;}${c.age===state.age?&#x27; is-selected-age&#x27;:&#x27;&#x27;}&quot; data-cell=&quot;${c.person_id}-${c.age}&quot; data-stage-age=&quot;${c.age}&quot; data-status=&quot;${c.data_status}&quot; aria-label=&quot;${esc(namesZh[c.person_id])}，${esc(names[c.person_id])}，${c.age}岁，${statusText(c)}${c.image_note?&#x27;，&#x27;+esc(c.image_note):&#x27;&#x27;}&quot;&gt;&lt;img src=&quot;${c.image}&quot; alt=&quot;&quot;&gt;${photoNote(c)}&lt;span class=&quot;sr-only&quot;&gt;${statusText(c)}&lt;/span&gt;&lt;/button&gt;`;}
@@ -2205,9 +2220,21 @@ html&gt;body{padding:0}&lt;/style&gt;
       for(const p of data.people){html+=`&lt;div class=&quot;person-name&quot;&gt;&lt;span class=&quot;cn&quot;&gt;${esc(p.name_zh)}&lt;/span&gt;&lt;span class=&quot;en&quot;&gt;${esc(p.name)}&lt;/span&gt;&lt;/div&gt;`+data.ages.map(a=&gt;cellButton(cellMap[p.person_id+&#x27;-&#x27;+a],filterMode)).join(&#x27;&#x27;);}
       return html;
     }
+    function mobileGridHtml(filterMode=false){
+      const filters=activeFilters();
+      return data.people.map(p=&gt;{
+        const cells=data.ages.map(age=&gt;cellMap[p.person_id+&#x27;-&#x27;+age]);
+        const matched=filterMode&amp;&amp;filters.length?cells.filter(c=&gt;match(c)===&#x27;match&#x27;).length:0;
+        const matchClass=!filterMode||!filters.length?&#x27;&#x27;:matched?&#x27; has-match&#x27;:&#x27; no-match&#x27;;
+        const summary=filterMode&amp;&amp;filters.length?`${matched} 个阶段匹配`:&#x27;十次相见&#x27;;
+        return `&lt;section class=&quot;mobile-person-strip${matchClass}&quot;&gt;&lt;div class=&quot;mobile-person-head&quot;&gt;&lt;strong&gt;${esc(p.name_zh)} · ${esc(p.name)}&lt;/strong&gt;&lt;span&gt;${summary}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;mobile-stage-grid&quot;&gt;${cells.map(c=&gt;`&lt;div class=&quot;mobile-stage-cell&quot;&gt;${cellButton(c,filterMode)}&lt;span class=&quot;mobile-stage-label&quot;&gt;${c.age}岁&lt;small&gt;${c.year}年&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;&lt;/section&gt;`;
+      }).join(&#x27;&#x27;);
+    }
     function renderOverview(){
       $(&#x27;overview-grid&#x27;).innerHTML=gridHtml(false);
       $(&#x27;filter-grid&#x27;).innerHTML=gridHtml(true);
+      $(&#x27;overview-mobile&#x27;).innerHTML=mobileGridHtml(false);
+      $(&#x27;filter-mobile&#x27;).innerHTML=mobileGridHtml(true);
       const filters=activeFilters();
       if(!filters.length){$(&#x27;filter-result&#x27;).textContent=&#x27;尚未限定条件：全部阶段保持清晰。&#x27;;return;}
       const matched=data.cells.filter(c=&gt;match(c)===&#x27;match&#x27;);
@@ -2215,6 +2242,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       $(&#x27;filter-result&#x27;).textContent=`匹配 ${matched.length} 个阶段，涉及 ${people.size} 位人物；其余阶段统一加蒙版。`;
     }
     function renderStage(){
+      if(state.age===null){$(&#x27;stage-title&#x27;).textContent=&#x27;同一个年龄，不同的人生&#x27;;$(&#x27;stage-note&#x27;).textContent=&#x27;&#x27;;$(&#x27;stage-cards&#x27;).innerHTML=&#x27;&#x27;;return;}
       $(&#x27;stage-title&#x27;).textContent=state.age+&#x27;岁：同一个年龄，不同的人生&#x27;;
       $(&#x27;stage-note&#x27;).textContent=data.years[state.age]+&#x27;年节目轮次&#x27;;
       $(&#x27;stage-cards&#x27;).innerHTML=data.people.map(p=&gt;{const c=cellMap[p.person_id+&#x27;-&#x27;+state.age];return `&lt;button type=&quot;button&quot; class=&quot;stage-card&quot; data-cell=&quot;${p.person_id}-${state.age}&quot;&gt;&lt;img src=&quot;${c.image}&quot; alt=&quot;&quot;&gt;${photoNote(c)}&lt;div class=&quot;stage-card-copy&quot;&gt;&lt;strong&gt;${esc(p.name_zh)} &lt;small&gt;${esc(p.name)}&lt;/small&gt;&lt;/strong&gt;&lt;span&gt;${esc(shortFact(c))}&lt;/span&gt;&lt;/div&gt;&lt;/button&gt;`;}).join(&#x27;&#x27;);
@@ -2279,11 +2307,10 @@ html&gt;body{padding:0}&lt;/style&gt;
       const personFocus=e.target.closest(&#x27;[data-person-focus]&#x27;);if(personFocus){state.person=personFocus.dataset.personFocus;state.age=70;state.selected=state.person+&#x27;-70&#x27;;state.view=&#x27;person&#x27;;renderAll();save();return;}
       const compareGroup=e.target.closest(&#x27;[data-compare-group]&#x27;);if(compareGroup){state.compareGroup=compareGroup.dataset.compareGroup;renderCompare();save();return;}
       const echoTopic=e.target.closest(&#x27;[data-echo-topic]&#x27;);if(echoTopic){state.echoTopic=state.echoTopic===echoTopic.dataset.echoTopic?null:echoTopic.dataset.echoTopic;renderEcho();save();return;}
-      const back=e.target.closest(&#x27;[data-back-overview]&#x27;);if(back){state.view=&#x27;overview&#x27;;state.selected=null;renderAll();save();$(&#x27;atlas-main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});return;}
-      const tab=e.target.closest(&#x27;[data-tab]&#x27;);if(tab){state.view=tab.dataset.tab;if([&#x27;overview&#x27;,&#x27;filter&#x27;,&#x27;compare&#x27;,&#x27;echo&#x27;,&#x27;notes&#x27;].includes(state.view))state.selected=null;if(state.view===&#x27;echo&#x27;&amp;&amp;!state.echoTopic)state.echoTopic=data.question_echoes[0]?.id||null;renderAll();save();$(&#x27;atlas-main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}
+      const back=e.target.closest(&#x27;[data-back-overview]&#x27;);if(back){state.view=&#x27;overview&#x27;;state.age=null;state.selected=null;renderAll();save();$(&#x27;atlas-main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});return;}
+      const tab=e.target.closest(&#x27;[data-tab]&#x27;);if(tab){state.view=tab.dataset.tab;if([&#x27;overview&#x27;,&#x27;filter&#x27;,&#x27;compare&#x27;,&#x27;echo&#x27;,&#x27;notes&#x27;].includes(state.view))state.selected=null;if(state.view===&#x27;overview&#x27;)state.age=null;if(state.view===&#x27;echo&#x27;&amp;&amp;!state.echoTopic)state.echoTopic=data.question_echoes[0]?.id||null;renderAll();save();$(&#x27;atlas-main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}
     });
     $(&#x27;filter-drawer&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{if(!e.target.dataset.filter)return;state.filters[e.target.dataset.filter]=e.target.value;renderAll();save();});
-    window.addEventListener(&#x27;openai:set_globals&#x27;,e=&gt;{const s=e.detail?.globals?.widgetState?.privateContent;if(!s||typeof s!==&#x27;object&#x27;||s.schema!==&#x27;up-life-atlas-v2&#x27;)return;state={...state,...s,view:validViews.has(s.view)?s.view:&#x27;overview&#x27;,filters:s.filters||{}};if(!data.comparison_groups.some(group=&gt;group.id===state.compareGroup))state.compareGroup=data.comparison_groups[0]?.id||null;if(state.view===&#x27;echo&#x27;&amp;&amp;!state.echoTopic)state.echoTopic=data.question_echoes[0]?.id||null;renderFilters();renderAll();});
     renderFilters();renderAll();
   })();
   &lt;/script&gt;
